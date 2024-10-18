@@ -1,6 +1,10 @@
 // 1. Write a JavaScript program to find the longest string in a given array
 function findLongestString(arr) {
-  // Your code here
+  let longest = "";
+  for (let i = 0; i < arr.length; i++)
+    if (arr[i].length > longest.length)
+      longest = arr[i];
+    return longest;
 }
 
 // Test for findLongestString
@@ -9,8 +13,9 @@ console.log("Testing findLongestString:")
 console.log("Expected: banana, Output: ", findLongestString(testArr1));
 
 // 2. Write an arrow function that calculates the area of a rectangle
-const calculateArea = () => {
+const calculateArea = (width, height) => {
   // Your code here
+  return width * height;
 };
 
 // Test for calculateArea
@@ -37,7 +42,10 @@ const library = [
 ];
 
 function displayReadingStatus() {
-  // Your code here
+  for (let item of library)
+  {
+    console.log(item.readingStatus ? "You already read " : "You still need to read ", item.title, " by ", item.author);
+  }
 }
 
 // Test for displayReadingStatus
@@ -46,7 +54,11 @@ displayReadingStatus();
 
 // 4. Square the value of every element in an array, then print the result
 function squareAndPrint(arr) {
-  // Your code here
+  for (let element of arr)
+  {
+    let square = element * element;
+    console.log("Square of ", element, " is ", square);
+  }
 }
 
 // Test for squareAndPrint
@@ -56,7 +68,13 @@ squareAndPrint(testArr2);
 
 // 5. Filter array to numbers greater than 5
 function filterGreaterThanFive(arr) {
-  // Your code here
+  let newArr = [];
+  for (let integer of arr)
+  {
+    if (integer > 5)
+      newArr.push(integer);
+  }
+  return newArr;
 }
 
 // Test for filterGreaterThanFive
