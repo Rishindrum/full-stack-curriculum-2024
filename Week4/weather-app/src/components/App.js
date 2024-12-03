@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/App.css'; // Import the CSS file for App
 
 import MainContainer from './MainContainer';
@@ -16,6 +16,11 @@ function App() {
   Use the 'useState' hook to create a state variable (e.g., 'selectedCity') and its corresponding setter 
   function (e.g., 'setSelectedCity'). The initial state can be an empty object or null.
   */
+
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState(null);
+  const [aqi, setAqi] = useState(null);
   
   
   /*
@@ -25,6 +30,34 @@ function App() {
   that takes city data as its argument and uses the setter function from the 'useState' hook to update the 
   state of the selected city. This function will be passed to SideContainer as a prop.
   */
+ useEffect(() => {
+  console.log(selectedCity);
+    if (selectedCity) {
+      fetch(`http://api.openweathermap.org/data/2.5/weather/?lat=${selectedCity.lat}&lon=${selectedCity.lon}&appid=${apiKey}&units=imperial`)
+        .then(response => response.json())
+        .then(data => {
+          setWeather({
+            condition: data.weather[0].main,
+            temperature: data.main.temp,
+            icon: data.weather[0].icon
+          });
+        });
+
+      fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${selectedCity.lat}&lon=${selectedCity.lon}&appid=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          setAqi({
+            index: data.list[0].main.aqi
+          });
+        });
+
+      fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${selectedCity.lat}&lon=${selectedCity.lon}&appid=${apiKey}&units=imperial`)
+        .then(response => response.json())
+        .then(data => {
+          setForecast(data);
+        });
+    }
+  }, [selectedCity]);
   
   
   return (
@@ -38,9 +71,18 @@ function App() {
       For the 'MainContainer' component, pass the state variable containing the selected city's data. This 
       allows MainContainer to display the weather for the selected city.
       */}
-      
-      <MainContainer apiKey={apiKey} /* Pass the selected city data as props to 'MainContainer' */ />
-      <SideContainer apiKey={apiKey} /* Pass the city data update function as a prop to 'SideContainer' */ />
+
+      <MainContainer 
+        city={selectedCity}
+        weather={weather}
+        forecast={forecast}
+        aqi={aqi}
+        apiKey={apiKey} /* Pass the selected city data as props to 'MainContainer' */
+      />
+      <SideContainer 
+        apiKey={apiKey} /* Pass the city data update function as a prop to 'SideContainer' */
+        setSelectedCity={setSelectedCity}
+      />
     </div>
   );
 }

@@ -12,5 +12,93 @@
 
 #weather-container {
   height: 60%;
-  width: 90%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #87b7ff;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+#current-weather-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+}
+
+#current-weather-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#current-weather-icon {
+  height: 150px;
+  width: 150px;
+  /* visibility: hidden; */
+}
+
+#forecast-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  visibility: hidden;
+}
+
+.forecast-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #badaef;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  width: 18%;
+}
+
+.forecast-icon {
+  height: 50px;
+  width: 50px;
+}
+
+#current-temperature {
+  font-size: 48px;
+  margin: 10px 0;
+}
+
+#weather-for {
+  align-self: flex-start;
+  margin-bottom: 20px;
+}
+
+#todays-date {
+  align-self: flex-start;
+  margin: 0;
+  color: #666;
+}
+
+#current-weather-condition {
+  margin: 0;
+  color: #444;
+}
+
+#current-aqi {
+  margin: 5px 0;
+  color: #666;
+}
+
+.forecast-date {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.forecast-min-max {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
 }

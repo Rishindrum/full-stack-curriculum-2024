@@ -45,20 +45,53 @@ function MainContainer(props) {
   */
   
   
+  if (!props.city || !props.weather) {
+    return <div id="main-container">Select a city to see weather</div>;
+  }
+
   return (
     <div id="main-container">
       <div id="weather-container">
-        {/* 
-        STEP 4: Display Weather Data.
+        <h5 id="todays-date">{formatDate(0)}</h5>
+        <h2 id="weather-for">Weather for {props.city.fullName}</h2>
         
-        With the fetched weather data stored in state, use conditional rendering (perhaps the ternary operator) 
-        to display it here. Make sure to check if the 'weather' state has data before trying to access its 
-        properties to avoid runtime errors. 
+        <div id="current-weather-container">
+          <div id="current-weather-info">
+            <h2 id="current-weather-condition">{props.weather.condition}</h2>
+            <h1 id="current-temperature">{Math.round(props.weather.temperature)}°</h1>
+            <h5 id="current-aqi">AQI: {props.aqi?.index}</h5>
+          </div>
+          <img 
+            id="current-weather-icon"
+            src={`https://openweathermap.org/img/wn/${props.weather.icon}@2x.png`}
+            alt="Weather icon"
+            style={{visibility: 'visible'}}
+          />
+        </div>
 
-        Break down the data object and figure out what you want to display (e.g., temperature, weather description).
-        This is a good section to play around with React components! Create your own - a good example could be a WeatherCard
-        component that takes in props, and displays data for each day of the week.
-        */}
+        {props.forecast && (
+          <div id="forecast-container" style={{visibility: 'visible'}}>
+            {[1, 2, 3, 4, 5].map(day => {
+              const dayData = props.forecast.list[day * 8 - 1];
+              return (
+                <div key={day} className="forecast-card">
+                  <h4 className="forecast-date" id={`forecast-${day}-date`}>
+                    {formatDate(day)}
+                  </h4>
+                  <img 
+                    className="forecast-icon"
+                    id={`forecast-${day}-icon`}
+                    src={`https://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`}
+                    alt="Forecast icon"
+                  />
+                  <h4 className="forecast-min-max" id={`forecast-${day}-min-max`}>
+                    {Math.round(dayData.main.temp_max)}° to {Math.round(dayData.main.temp_min)}°
+                  </h4>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

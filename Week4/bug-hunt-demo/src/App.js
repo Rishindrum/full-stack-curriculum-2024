@@ -15,14 +15,19 @@ export default function App() {
 
   // 1. We want to increase the counter by one on render, why does it increase by more than one?
   useEffect(() => {
-    setCounter(counter + 1);
+    // setCounter(counter + 1);
   }, [counter]);
+
+  useEffect(() => {
+    console.log("Counter Two Value is ", counterTwo); // Bug 2: It logs the old state value
+    // setCounter(counter + 1);
+  }, [counterTwo]);
 
   // 2. We want to log out the value of counterTwo after we increase it, why doesn't it log the new value?
   // How would you log the new value rather than the old one?
   const setCountValue = () => {
     setCounterTwo(counterTwo + 1);
-    console.log("Counter Two Value is ", counterTwo); // Bug 2: It logs the old state value
+    // console.log("Counter Two Value is ", counterTwo+1); // Bug 2: It logs the old state value
   };
 
   // Fix Bug 1 first!
@@ -30,9 +35,9 @@ export default function App() {
   // 3.1. Bonus: if you click "Change name" then click "Increase Count Two", the name changes magically
   const changeName = () => {
     // Bug 3: Directly trying to modify the state object
-    name.fname = "Bruce";
-    name.lname = "Wayne";
-    setName(name);
+    // name.fname = "Bruce";
+    // name.lname = "Wayne";
+    setName({ fname : "Bruce", lname : "Wayne"});
   };
 
   // 4. We want to increase the counter by one every second, but it displays NaN

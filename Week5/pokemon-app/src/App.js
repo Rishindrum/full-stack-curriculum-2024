@@ -11,7 +11,17 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      Hello World!
+      <AppBar>
+          <Toolbar>
+            <Typography variant = 'h6' sx ={{flexGrow : 1}}>
+              Pokedex App
+            </Typography>
+            <IconButton onClick={toggleTheme}>
+              {theme.palette.mode === 'dark' ? <WbSunny/> : <NightsStay/>}
+            </IconButton>
+          </Toolbar>
+          
+      </AppBar>
     </ThemeProvider>
   );
 }
