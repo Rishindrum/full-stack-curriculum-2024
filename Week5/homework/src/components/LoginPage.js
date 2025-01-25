@@ -14,16 +14,24 @@ function LoginPage() {
   // Access the MUI theme for potential theme-related functionalities.
   const theme = useTheme();
 
-  // TODO: Extract login function and error from our authentication context.
-  const { login, error } = useAuth();
+  // TODO: Extract login + register function and error from our authentication context.
+  const {error, login, register} = useAuth();
 
   // State to hold the username and password entered by the user.
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [registerPage, setRegisterPage] = useState(false);
 
   // TODO: Handle login function.
   const handleLogin = () => {
-    login(username, password);
+    if (registerPage) 
+    {
+      register(username, password);
+    } 
+    else 
+    {
+      login(username, password);
+    }
   };
 
   return (
@@ -47,7 +55,8 @@ function LoginPage() {
           src="/longhorn.jpg"
         ></Box>
         <Typography component="h1" variant="h4" fontWeight="bold">
-          Login
+          {/*Depedning on mode, change the title*/}
+          {registerPage ? "Register" : "Login"}
         </Typography>
         <Box sx={{ mt: 1 }}>
           <TextField
@@ -84,8 +93,24 @@ function LoginPage() {
             sx={{ mt: 3, mb: 2 }}
             onClick={handleLogin}
           >
-            Login
+          {registerPage ? "Register" : "Login"}
           </Button>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button
+            color="secondary"
+            sx={{ 
+              mt: 1, 
+              color: '#FFA07A', // Burnt orange color
+              padding: '10px', 
+              '&:hover': {
+                color: '#B34700', // Darker burnt orange for hover effect
+              }
+            }}
+            onClick={() => setRegisterPage((mode) => !mode)}
+          >
+            {registerPage ? "Switch to Login" : "Switch to Register"}
+          </Button>
+          </div>
         </Box>
         {/* TODO: Display Login Error if it exists */}
         {

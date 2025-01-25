@@ -1,3 +1,4 @@
+
 # Week 6: Introduction to NodeJS and Databases
 
 We have officially transitioned to the backend portion of the full-stack course! This week, we will go over creating API's in ExpressJS, a popular NodeJS library. We will go over how to structure your backend projects, what middleware is, and how to interact with databases.
