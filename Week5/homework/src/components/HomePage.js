@@ -31,10 +31,16 @@ export default function HomePage() {
       navigate('/login');
     }
     else {
-      // console.log('FETCHING TASKS from:', `${process.env.REACT_APP_BACKEND}`);
-      fetch(`${process.env.REACT_APP_BACKEND}/tasks/${user}`)
-      .then(response => response.json())
+      console.log('FETCHING TASKS from:', `${process.env.REACT_APP_BACKEND}`);
+      console.log('USER:', user.email);
+      fetch(`${process.env.REACT_APP_BACKEND}/tasks/${user.email}`)
+      .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+      }
+    )
       .then(data => {
+        console.log('Received tasks:', data);
         setTaskList(data);
       })
       .catch(error => {
@@ -42,7 +48,7 @@ export default function HomePage() {
       })
       console.log('FETCHED TASKS:', taskList);
     }
-  }, [user, navigate]);
+  }, [user]);
 
   // TODO: Support retrieving your todo list from the API.
   // Currently, the tasks are hardcoded. You'll need to make an API call

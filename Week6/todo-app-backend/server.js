@@ -42,14 +42,18 @@ app.use(bodyParser.json());
 
 // GET: Endpoint to retrieve all tasks for a user
 // ...
-app.get("/tasks/:user", async (req, res) => {
+app.get("/tasks/:userEmail", async (req, res) => {
   try {
-    // Fetching all documents from the "tasks" collection in Firestore
-    const snapshot = await db.collection("tasks").where("user", "==", req.params.user).get()
 
+    console.log("Querying tasks for email:", req.params.userEmail);
+    // Fetching all documents from the "tasks" collection in Firestore
+    const snapshot = await db.collection("tasks").where("user.email", "==", req.params.userEmail).get()
+
+    console.log("Snapshot size:", snapshot.size);
     let tasks = [];
     // Looping through each document and collecting data
     snapshot.forEach((doc) => {
+      console.log("Found task:", {id: doc.id, data: doc.data()});
       tasks.push({
         id: doc.id,  // Document ID from Firestore
         ...doc.data(),  // Document data
