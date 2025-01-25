@@ -90,15 +90,16 @@ app.post("/tasks", async (req, res) => {
 // ...
 app.delete("/tasks/:id", async (req, res) => {
   try {
-    const task = db.collection('tasks').doc(req.params.id);
-    const doc = await task.get();
+    const {id} = req.body;
+    const taskref = db.collection('tasks').doc(id);
+    const task = await taskref.get();
 
-    if (!doc.exists) {
+    if (!task.exists) {
       return res.status(404).send('Task not found');
     }
 
-    await task.delete();
-    res.status(200).send(`Task ${taskId} deleted`);
+    await taskref.delete();
+    res.status(200).send(`Task ${id} deleted`);
   } catch (error) {
     res.status(500).send(error.message);
   }

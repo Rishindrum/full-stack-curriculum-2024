@@ -40,6 +40,7 @@ export default function HomePage() {
       .catch(error => {
         console.error('Failed to fetch:', error);
       })
+      console.log('FETCHED TASKS:', taskList);
     }
   }, [user, navigate]);
 
@@ -88,15 +89,18 @@ export default function HomePage() {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({
+        id: task.id
     })
-      .then(response => response.json())
+  })
+      .then(response => response.text())
       .then(data => {
         const updatedTaskList = taskList.filter((existingTask) => existingTask.id !== task.id);
         setTaskList(updatedTaskList);
       })
       .catch(error => {
-        console.error('FAILED TO FETCH:', error);
+        console.error('FAILED TO DELETE:', error);
       });
 
     // TODO: Support removing/checking off todo items in your todo list through the API.
